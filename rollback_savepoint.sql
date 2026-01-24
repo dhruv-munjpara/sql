@@ -1,0 +1,15 @@
+create database bank;
+use bank;
+create table bank(user_id int primary key,balance int);
+insert into bank values(1,1500),(2,2000);
+select * from bank;
+start transaction;
+update bank set balance=balance-500 where user_id=2;
+savepoint sp;
+update bank set balance=balance-200 where user_id=2;
+savepoint sp1;
+update bank set balance=balance-300 where user_id=2;
+savepoint sp2;
+update bank set balance=balance-200 where user_id=2;
+rollback to sp2;
+commit;
