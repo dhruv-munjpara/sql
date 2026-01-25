@@ -1,0 +1,114 @@
+CREATE DATABASE exam
+-------------------------------
+
+CREATE TABLE departments(
+	dept_id int PRIMARY KEY,
+    dept_name varchar(50)
+);
+------------------------------------
+
+CREATE table employees(
+	emp_id int PRIMARY KEY,
+    emp_name varchar(50),
+    salary int,
+    dept_id int,
+    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+);
+--------------------------------------------------------------
+CREATE TABLE orders(
+	order_id int PRIMARY KEY,
+    emp_id INT,
+    ammount INT,
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+);
+--------------------------------------------------------------------
+INSERT INTO departments VALUES(1,"HR");
+INSERT INTO departments VALUES(2,"IT");
+INSERT INTO departments VALUES(3,"Salse");
+-----------------------------------------------------------------
+INSERT INTO employees VALUES(101,"Amit",30000,1);
+INSERT INTO employees VALUES(102,"Neha",40000,2);
+INSERT INTO employees VALUES(103,"Ravi",35000,2);
+INSERT INTO employees VALUES(104,"Pooja",25000,3);
+-------------------------------------------------------------------
+INSERT INTO orders VALUES(1,101,5000);
+INSERT INTO orders VALUES(2,102,8000);
+INSERT INTO orders VALUES(3,103,7000);
+INSERT INTO orders VALUES(4,104,4000);
+----------------------------------------------------------------------
+query::
+1)count:count total number of employees
+
+------>	SELECT COUNT(*) FROM employees;
+---------------------------------------------------------
+		4
+2)sum:find total salary of emp
+
+------>	SELECT sum(salary) FROM employees;
+		13000
+---------------------------------------------------------------
+3)avg: find average salary of emp
+
+------->SELECT AVG(salary) FROM employees;
+		32500.0000
+---------------------------------------------------------------------
+5)inner join: show emp name with department name
+
+------>	SELECT employees.emp_name,departments.dept_name FROM employees INNER JOIN departments ON employees.dept_id=departments.dept_id;
+-----------------------------------------------------------------------------------------------------------------------------------------
+6)join +sum: find total order amount handled by each emp
+
+------>	SELECT e.emp_id,e.emp_name,SUM(o.ammount) AS total_order_amount
+				FROM employees e
+						JOIN orders ON e.emp_id = o.emp_id GROUP BY e.emp_id, e.emp_name;
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+7)view: create view showing employee name,department,and salary
+
+------>	CREATE VIEW exam1 as SELECT emp_name ,dept_id,salary FROM employees;
+-------------------------------------------------------------------------------------------------------------------------------------
+
+8)procedure: create  a procedure to show all employee
+
+------>	DELIMITER $$
+	CREATE PROCEDURE fatch()
+	BEGIN
+   		SELECT * FROM employees;
+	END $$
+
+	DELIMITER ;
+
+
+
+CALL fatch();
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+9)procuder with parameter : procuder to get empl by department
+
+-------->
+DELIMITER $$
+CREATE PROCEDURE PROCEDURE_to_parameter(IN deptId INT)
+BEGIN
+    SELECT * FROM employees
+    WHERE dept_id = deptId;
+END $$
+DELIMITER ;
+
+
+
+CALL  PROCEDURE_to_parameter(2);
+---------------------------------------------------------------------------------------------------------------------------------------------
+10)join+avg :find avg salary department -wise
+
+------>	SELECT d.dept_name,
+       AVG(e.salary) AS avg_salary
+FROM employees e
+JOIN departments d
+ON e.dept_id = d.dept_id
+GROUP BY d.dept_name;
+
+
+ 
