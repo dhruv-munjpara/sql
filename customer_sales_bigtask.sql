@@ -32,7 +32,14 @@ select count(*) as invoices from sales_data;
 #Count total number of customers.
 select count(*) as total_customer from customer_data;
 
-#Display sales ordered by price (highest first).
-SELECT count(*) FROM sales_data ORDER BY CAST(price AS DECIMAL(10,2)) DESC;
+#=====================================Display sales ordered by price (highest first).
+SELECT * FROM sales_data ORDER BY price;
+
+#====================Display sales ordered by invoice_date (latest first).
+select * from sales_data order by invoice_date desc;
+
+#Find the minimum price from sales.
+select min(price) from sales_data;
+
 
 
