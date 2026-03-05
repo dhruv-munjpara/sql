@@ -1,0 +1,196 @@
+CREATE DATABASE E_com_salse_ana;
+
+CREATE TABLE customers(
+	customer_id int PRIMARY KEY,
+    name varchar(50),
+    join_date date
+);
+
+CREATE TABLE orders(
+	order_id int PRIMARY KEY,
+    customer_id int,
+    order_date date,
+    total_amount int,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE products(
+	product_id int PRIMARY key,
+    product_name varchar(50),
+    category varchar(50),
+    unit_price int
+);
+
+CREATE TABLE order_items(
+	order_id int,
+    product_id int,
+    quantity int,
+    price int,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY(product_id) REFERENCES products(product_id)
+);
+
+
+
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (1,'dhruv','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (2,'het','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (3,'deep','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (4,'tarang','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (5,'miten','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (6,'ashok','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (7,'parth','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (8,'janvi','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (9,'manshi','1-1-2001');
+INSERT INTO `customers`(`customer_id`, `name`, `join_date`) VALUES (10,'ayush','1-1-2001');
+
+
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (101,'shirt','200-300',250);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (102,'pent','1000-2000',1500);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (103,'shirt','500-1000',700);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (104,'pent','200-300',250);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (105,'tshirt','200-300',300);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (106,'shoes','2000-5000',2500);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (107,'pent','200-300',250);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (108,'shirt','200-300',250);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (109,'tshirt','1200-1300',1250);
+INSERT INTO `products`(`product_id`, `product_name`, `category`, `unit_price`) VALUES (110,'shoes','2200-3300',2550);
+
+
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (1,1,'2004-02-01',1000);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (2,2,'2004-02-25',2000);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (3,3,'2004-02-25',1000);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (4,4,'2004-02-22',1500);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (5,5,'2004-02-27',2000);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (6,6,'2004-02-21',500);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (7,7,'2004-02-25',700);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (8,8,'2004-02-24',200);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (9,9,'2004-02-25',2000);
+INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (10,10,'2004-02-28',2100);
+
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (1,101,2,2000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (2,102,1,1000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (3,103,5,5000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (4,104,3,3000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (5,105,1,1000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (6,106,2,2000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (7,107,5,5000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (8,108,7,7000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (9,109,1,1000);
+INSERT INTO `order_items`(`order_id`, `product_id`, `quantity`, `price`) VALUES (10,110,2,2000);
+
+
+
+
+
+
+Business Problems & MySQL Solutions:
+
+Q1: What are the monthly salestrends?
+Concept: GROUP BY, DATE_FORMAT, Time seriestrend extraction Use: Input for forecasting
+models
+
+ans)
+
+SELECT date_format(order_date,'%y-%m') as month,
+SUM(total_amount) as monthly_salse
+FROM orders
+GROUP BY date_format(order_date,'%y-%m')
+ORDER BY month;
+
+
+
+Q2: Who are the top 5 customers by revenue? Concept: Joins,
+Aggregations, LIMIT
+Use: Targeting VIP customersin retention campaigns
+
+ans)
+
+SELECT customers.customer_id,customers.name ,sum(orders.total_amount) as total_revenue
+FROM customers  JOIN orders  ON customers.customer_id=orders.order_id
+GROUP BY customers.customer_id,customers.name
+ORDER BY total_revenue DESC LIMIT 5;
+
+Q3: What is the
+average order value per customer?
+Concept: Basic CLV (Customer Lifetime Value) calculation Use: Customer segmentation, LTV
+modeling
+
+ans)
+
+SELECT c.customer_id,c.name,sum(o.total_amount)/count(o.order_id) as avg_order_value FROM customers c JOIN orders o ON c.customer_id=o.order_id GROUP BY c.customer_id,c.name ORDER BY avg_order_value DESC;
+
+
+
+4. Which category generated the most revenue last quarter?
+
+ans)
+
+SELECT 
+    p.category,
+    SUM(oi.price) AS total_revenue
+FROM orders o
+JOIN order_items oi
+    ON o.order_id = oi.order_id
+JOIN products p
+    ON oi.product_id = p.product_id
+GROUP BY p.category
+ORDER BY total_revenue DESC
+LIMIT 1;
+
+
+5. What is the average number of items per order?
+
+ans)
+
+SELECT avg(items_per_order) AS avg_items_per_order
+FROM(
+	SELECT order_id,
+    sum(quantity) AS items_per_order
+    FROM order_items
+    GROUP BY order_id
+)
+AS order_summary;
+
+
+6. Which products have never been sold?
+
+ans)
+
+SELECT p.product_id,p.product_name,p.category    FROM products p LEFT JOIN order_items oi
+ON p.product_id=oi.order_id where oi.product_id IS null
+
+7. What is the most popular product in each category by quantity sold?
+
+ans)SELECT  p.category,p.product_name, SUM(oi.quantity) AS total_quantity FROM products p JOIN order_items oi 
+   		 ON p.product_id = oi.product_id
+     GROUP BY p.category, p.product_name ORDER BY p.category, total_quantity DESC;
+
+8. How many new customersjoined each month?
+
+ans)
+
+SELECT date_format(join_date,'%y-%m') as join_month,COUNT(customer_id) as new_customers
+FROM customers GROUP BY date_format(join_date,'%y-%m')
+ORDER BY join_month;
+
+
+9. Which day of the week has the highest average sales?
+
+ans)
+
+SELECT DAYNAME(order_date) as day_of_week, avg(total_amount) as avg_salse FROM orders
+GROUP BY DAYNAME(order_date) ORDER BY avg_salse DESC
+LIMIT 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
