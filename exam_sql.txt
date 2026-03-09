@@ -41,16 +41,13 @@ query::
 
 ------>	SELECT COUNT(*) FROM employees;
 ---------------------------------------------------------
-		4
 2)sum:find total salary of emp
 
 ------>	SELECT sum(salary) FROM employees;
-		13000
 ---------------------------------------------------------------
 3)avg: find average salary of emp
 
 ------->SELECT AVG(salary) FROM employees;
-		32500.0000
 ---------------------------------------------------------------------
 5)inner join: show emp name with department name
 

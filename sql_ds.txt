@@ -1,0 +1,565 @@
+task 1:
+
+create database tops;
+
+CREATE TABLE studentdetails(
+    s_id int not null AUTO_INCREMENT,
+    s_name varchar(40) NOT null,
+    fees int not null,
+    course varchar(40) NOT null,
+    education varchar(40) not null,
+    address varchar(40) NOT null,
+    PRIMARY KEY(s_id)
+);
+
+
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (1,"dhruv",150000,"ds","bca","ahmedabad");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (2,"ram",110000,"ds","bca","ahmedabad");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (3,"shayam",120000,"da","mca","surat");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (4,"romil",130000,"python","msc","baroda");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (5,"vishwaraj",140000,"java","bca","surendranagar");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (6,"abhijeet",150000,"backend","mca","limbdi");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (7,"dixita",160000,"ds","msc","bopal");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (8,"het",170000,"da","bca","limbdi");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (9,"tarang",180000,"frontend","bca","ahmedabad");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (10,"ashok",190000,"da","msc","chotila");
+INSERT INTO studentdetails (s_id,s_name,fees,course,education,address) VALUES (11,"parth",200000,"da","bcom","botad");
+
+
+
+SELECT COUNT(*) from studentdetails;
+SELECT COUNT(*) from studentdetails where course="bcom";
+SELECT sum(fees) FROM studentdetails;
+SELECT sum(fees) from studentdetails where course="ds";
+SELECT * FROM sub_python;
+CREATE VIEW ed_dsc as SELECT * FROM studentdetails where education="dsa";
+SELECT * FROM `sub_python`;
+SELECT * FROM `studentdetails` ORDER BY course ASC;
+SELECT * FROM `studentdetails` ORDER BY fees ASC;
+SELECT * FROM `studentdetails` ORDER BY fees DESC;
+SELECT min(fees) FROM studentdetails;
+SELECT MAX(fees) FROM studentdetails;
+
+
+
+
+upper column
+SELECT s_name,upper(s_name) as upperdata FROM studentdetails;
+lower
+SELECT s_name,lower(s_name) as upperdata FROM studentdetails;
+length
+SELECT s_name,length(s_name) as upperdata FROM studentdetails;
+concat
+SELECT concat(s_name,"-",fees) as concatdata FROM studentdetails;
+reverse
+SELECT s_name,reverse(s_name) as reversdata FROM studentdetails;
+replace
+SELECT s_name,REPLACE(s_name,"a","z") as replacedata FROM studentdetails;
+trim
+SELECT s_name,trim(s_name) as trimdata FROM studentdetails;
+ltrim
+SELECT trim("  xyx") as ltrimdata FROM studentdetails;
+substring
+SELECT s_id, SUBSTRING(s_name, 1, 3) AS substringdata
+FROM studentdetails;
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+task 2:
+
+create DATABASE BASETABLE;
+
+CREATE TABLE students(
+	id INT,
+    name varchar(20),
+    age INT,
+    city varchar(20),
+    marks INT
+);
+
+
+
+INSERT INTO students VALUES
+(1, 'Rahul', 18, 'Ahmedabad', 75),
+(2, 'Amit', 20, 'Surat', 45),
+(3, 'Neha', 19, 'Ahmedabad', 82),
+(4, 'Pooja', 21, 'Rajkot', 60),
+(5, 'Karan', 18, 'Surat', 30),
+(6, 'Mehul', 22, 'Ahmedabad', 55);
+
+
+1: AND / OR / NOT (SELECT):
+
+Task 1
+Fetch students who are from Ahmedabad AND have marks greater than 60
+SELECT * from students WHERE city="Ahmedabad" and marks>60;
+
+
+Task 2
+Fetch students who are from Surat OR Rajkot
+SELECT * FROM `students` where city="surat" or city="rajkot";
+
+
+Task 3
+Fetch students who do NOT have marks less than 50
+SELECT * FROM `students` where marks<50;
+SELECT * FROM `students` where not marks<50;
+
+
+
+Task 4
+Fetch students whose age is 18 AND city is Surat
+SELECT * FROM students where age=18 and city="surat";
+
+
+Task 5
+Fetch all students except those from Ahmedabad
+SELECT * FROM `students` WHERE not city="Ahmedabad";
+
+
+🔹 TASK SET 2: UPDATE QUERY
+
+Task 6
+Update marks to 40 for the student with id = 5
+
+
+Task 7
+Increase marks by 10 for all students from Surat
+UPDATE students set marks=marks+10 where city="surat";
+
+Task 8
+Update marks to 35 for all students whose marks are less than 35
+UPDATE students set marks=35 where marks<35;
+
+Task 9
+Update city to Vadodara for students whose age is 22
+UPDATE students set city="Vadodara" where age=22;
+
+Task 10 ⚠️ (Thinking Task)
+Increase age by 1 for all students whose marks are greater than 80
+UPDATE students set age=age+1 where marks<80;
+
+
+🔹 TASK SET 3: COUNT()
+
+Task 11
+Find the total number of students
+SELECT COUNT(*) FROM students;
+
+
+Task 12
+Count how many students are from Surat
+SELECT COUNT(*) FROM students where city="surat";
+
+Task 13
+Count students who have marks greater than 50
+SELECT COUNT(*) FROM students where marks<50;
+
+Task 14
+Count students who are from Ahmedabad AND have marks greater than 60
+SELECT COUNT(*) FROM students where city="Ahmedabad" and marks<60;
+
+
+🔹 TASK SET 4: SUM()
+Task 15
+Find the total marks of all students
+SELECT sum(marks) FROM students;
+
+Task 16
+Find the total marks of students from Ahmedabad
+SELECT sum(marks) FROM students where city="Ahmedabad";
+
+Task 17
+Find the total marks of students who have marks less than 50
+SELECT sum(marks) FROM students where marks<50;
+
+🔹 TASK SET 5: AVG()
+Task 18
+Find the average marks of all students
+SELECT avg(marks) FROM `students`;
+
+Task 19
+Find the average marks of students from Surat
+SELECT avg(marks) FROM `students` where city="surat";
+
+Task 20
+Find the average marks city-wise
+(Hint: GROUP BY)
+SELECT avg(marks) FROM `students` GROUP by city;
+
+🔹 BONUS MIX TASK (Interview Level)
+Task 21
+Fetch students who are from Ahmedabad OR Surat
+AND have marks greater than or equal to 60
+SELECT * FROM `students` Where (city="Ahmedabad" or city="surat") and marks>=60;
+
+Task 22
+Fetch students whose marks are below the overall average
+(Hint: AVG + subquery)
+SELECT * FROM `students`WHERE marks<(SELECT AVG(marks) from students);
+
+Task 23
+Find the total number of students city-wise
+SELECT COUNT(*) FROM students GROUP by city; 
+
+Task 24
+Increase marks by 5 for all students from Rajkot
+update students set marks=marks+5 WHERE city="rajkot";
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+task 3:
+CREATE table customer(
+	cust_id int AUTO_INCREMENT,
+    cust_address varchar(50),
+    cust_mobile varchar(50),
+    PRIMARY KEY(cust_id)
+);
+CREATE table product(
+	prod_id int AUTO_INCREMENT ,
+    prod_name varchar(50),
+    PRIMARY KEY(prod_id)
+);
+CREATE TABLE orders1(
+	ord_id int AUTO_INCREMENT,
+    ord_details varchar(50),
+    cust_id int,
+    prod_id int,
+    PRIMARY key(ord_id),
+    FOREIGN KEY(cust_id) REFERENCES customer(cust_id),
+	FOREIGN KEY(prod_id) REFERENCES product(prod_id)
+);
+
+INSERT INTO `customer`( `cust_address`, `cust_mobile`) VALUES ('ahemdabad','1234567890');
+INSERT INTO `customer`( `cust_address`, `cust_mobile`) VALUES ('botad','0034567890');
+INSERT INTO `customer`( `cust_address`, `cust_mobile`) VALUES ('surat','1288567890');
+
+INSERT INTO `product`( `prod_name`) VALUES ('dhruv');
+INSERT INTO `product`( `prod_name`) VALUES ('vishwaraj');
+INSERT INTO `product`( `prod_name`) VALUES ('dixita');
+
+INSERT INTO `orders1`( `ord_details`, `cust_id`, `prod_id`) VALUES ('xyz',1,2);
+INSERT INTO `orders1`( `ord_details`, `cust_id`, `prod_id`) VALUES ('abc',2,3);
+INSERT INTO `orders1`( `ord_details`, `cust_id`, `prod_id`) VALUES ('wer',3,1);
+
+SELECT customer.cust_address,customer.cust_mobile,orders1.prod_name FROM customer INNER JOIN orders1 on customer.cust_id=orders1.cust_id;
+
+ALTER TABLE customer
+ADD cust_name VARCHAR(50);
+UPDATE customer SET cust_name = 'Rahul' WHERE cust_id = 1;
+UPDATE customer SET cust_name = 'Amit'  WHERE cust_id = 2;
+UPDATE customer SET cust_name = 'Neha'  WHERE cust_id = 3;
+
+
+procuder ::::
+
+
+1) data fetch:
+DELIMITER $$
+
+CREATE PROCEDURE dataselect()
+ BEGIN
+ SELECT * FROM customer;
+ END$$
+ 
+ DELIMITER ;
+ 
+ CALL dataselect()
+
+
+2) data isert
+DELIMITER $$
+
+CREATE PROCEDURE datainsert(
+	IN cust_address varchar(50),
+    IN cust_mobile varchar(50),
+    IN cust_name varchar(50)
+)
+ BEGIN
+ INSERT INTO customer(cust_address,cust_mobile,cust_name) VALUES(cust_address,cust_mobile,cust_name);
+ END$$
+ 
+ DELIMITER ;
+
+
+ CALL datainsert("ahemdabad","1234567890","rahul")
+ CALL datainsert("botad","1234567895","dhruvvvv")
+
+
+3)data delet
+
+DELIMITER $$
+
+CREATE PROCEDURE datadelete(
+	IN cust_id int
+)
+ BEGIN
+ DELETE FROM customer where cust_id=cust_id;
+ END$$
+ 
+ DELIMITER ;
+
+
+ CALL datadelete(5)
+
+4)data update
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+index:
+
+CREATE INDEX test ON customer(cust_address);
+SHOW INDEX FROM customer;
+CREATE INDEX testing ON customer(cust_address,cust_mobile);
+SHOW INDEX from customer;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+task 4:
+
+CREATE DATABASE task4;
+
+CREATE table students(
+    student_id int PRIMARY key,
+    name varchar(50),
+    city varchar(50),
+    age int
+);
+
+CREATE TABLE courses (
+  course_id INT PRIMARY KEY,
+  course_name VARCHAR(50),
+  fees INT
+);
+
+CREATE TABLE enrollments (
+  enroll_id INT PRIMARY KEY,
+  student_id INT,
+  course_id INT,
+  enroll_date DATE,
+  FOREIGN KEY (student_id) REFERENCES students(student_id),
+  FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+INSERT INTO students VALUES
+(1,'Rahul','Ahmedabad',21),
+(2,'Priya','Surat',22),
+(3,'Amit','Vadodara',20),
+(4,'Neha','Ahmedabad',23);
+
+INSERT INTO courses VALUES
+(101,'Java',15000),
+(102,'Python',12000),
+(103,'Web Development',10000);
+
+
+INSERT INTO enrollments VALUES
+(1,1,101,'2024-01-10'),
+(2,2,102,'2024-01-12'),
+(3,3,101,'2024-01-15'),
+(4,1,103,'2024-01-20');
+
+
+🧩 TASKS
+
+✅ TASK 1: INNER JOIN
+Task:
+Display student name, course name, and enrollment date.
+📌 Concept: INNER JOIN
+SELECT students.name,courses.course_name ,enrollments.enroll_date FROM enrollments  INNER JOIN students  on enrollments.student_id=students.student_id INNER JOIN courses  on enrollments.course_id=courses.course_id;
+
+
+✅ TASK 2: LEFT JOIN
+Task:
+Display all students with their enrolled course names.
+Show NULL if a student is not enrolled.
+📌 Concept: LEFT JOIN
+SELECT students.name,courses.course_name FROM students LEFT JOIN enrollments on students.student_id=enrollments.student_id LEFT JOIN courses on enrollments.course_id=courses.course_id;
+
+✅ TASK 3: RIGHT JOIN
+Task:
+Display all courses and students enrolled in them.
+📌 Concept: RIGHT JOIN
+SELECT courses.course_name,students.name,enrollments.enroll_id
+FROM students 
+RIGHT JOIN enrollments ON students.student_id = enrollments.student_id RIGHT JOIN courses ON enrollments.course_id = courses.course_id;
+
+
+✅ TASK 4: JOIN + WHERE
+Task:
+Display students who are enrolled in the Java course.
+📌 Concept: JOIN + WHERE
+SELECT students.name FROM students INNER JOIN enrollments on students.student_id=enrollments.student_id INNER JOIN courses ON enrollments.course_id=courses.course_id where  courses.course_name="java";
+
+
+
+
+
+✅ TASK 5: CREATE VIEW Task:
+ Create a view named student_course_view that shows student name, city, course name, and fees. 
+📌 Concept: VIEW
+CREATE VIEW student_course_view as SELECT students.name,students.city,courses.course_name,courses.fees FROM students INNER JOIN enrollments on students.student_id=enrollments.student_id INNER JOIN courses on enrollments.course_id=courses.course_id
+
+
+
+
+✅ TASK 6: SELECT FROM VIEW
+Task:
+Fetch all records from student_course_view
+where city = 'Ahmedabad'.
+SELECT * FROM  student_course_view WHERE city="Ahmedabad";
+
+✅ TASK 7: UPDATE THROUGH VIEW
+Task:
+Update city to 'Gandhinagar' for student Rahul using the view.
+📌 Concept: Updatable VIEW
+UPDATE student_course_view SET city="Gandhinagar" WHERE name="rahul";
+
+
+✅ TASK 8: CREATE INDEX
+Task:
+Create an index on city column of students table.
+📌 Concept: INDEX
+CREATE INDEX city_index ON students(city);
+SHOW INDEX FROM students;
+
+✅ TASK 9: COMPOSITE INDEX
+Task:
+Create a composite index on student_id and course_id in enrollments table.
+📌 Concept: Composite INDEX
+CREATE INDEX composite_index on enrollments(student_id,course_id);
+show INDEX FROM enrollments;
+
+✅ TASK 10: PERFORMANCE CHECK
+Task:
+Use EXPLAIN to analyze the query that fetches students from Ahmedabad.
+📌 Concept: INDEX + EXPLAIN
+SELECT * FROM students WHERE city='Ahmedabad';
+EXPLAIN SELECT * FROM students WHERE city='Ahmedabad';
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+ task 5:-
+
+
+CREATE DATABASE outers;
+
+CREATE table product(
+	prod_id int PRIMARY KEY,
+    prod_name varchar(50),
+    tshirt varchar(50),
+    jeans varchar(50)
+);
+
+
+CREATE TABLE size(
+	size_id int PRIMARY key,
+    size varchar(50)
+);
+
+CREATE TABLE color (
+    color_id INT PRIMARY KEY,
+    color VARCHAR(50),
+    prod_id INT,
+    size_id INT,
+    FOREIGN KEY (prod_id) REFERENCES product(prod_id),
+    FOREIGN KEY (size_id) REFERENCES size(size_id)
+);
+
+
+INSERT INTO `size`(`size_id`, `size`) VALUES (1,'s');
+INSERT INTO `size`(`size_id`, `size`) VALUES (2,'l');
+INSERT INTO `size`(`size_id`, `size`) VALUES (3,'m');
+
+INSERT INTO `product`(`prod_id`, `prod_name`) VALUES (1,'tshirt');
+INSERT INTO `product`(`prod_id`, `prod_name`) VALUES (2,'shirt');
+INSERT INTO `product`(`prod_id`, `prod_name`) VALUES (3,'jeans');
+INSERT INTO `product`(`prod_id`, `prod_name`) VALUES (4,'formaljeans');
+INSERT INTO `product`(`prod_id`, `prod_name`) VALUES (5,'formalshirt');
+
+INSERT INTO `color`(`color_id`, `color`, `prod_id`, `size_id`) VALUES (1,'red',1,1);
+INSERT INTO `color`(`color_id`, `color`, `prod_id`, `size_id`) VALUES (2,'blue',2,2);
+INSERT INTO `color`(`color_id`, `color`, `prod_id`, `size_id`) VALUES (3,'yellow',3,3);
+
+
+SELECT p.prod_name, s.size, c.color
+FROM product p
+CROSS JOIN size s
+CROSS JOIN color c;
+   
+
+if we want to pname,size
+SELECT p.prod_name, s.size
+FROM product p
+CROSS JOIN size s;
+
+if we want to pname And color
+SELECT p.prod_name, c.color
+FROM product p
+CROSS JOIN color c;
+
+if we wanr to size and color
+SELECT  c.color ,s.size
+FROM color c
+CROSS JOIN size s;
+
+
+-------------------------------------------------------------------------------------------------------------
+CREATE DATABASE TRIGGER1;
+
+CREATE TABLE salse(
+	sid INT PRIMARY KEY,
+    sname varchar(50)
+);
+
+CREATE TABLE message(
+	msg varchar(50)
+);
+
+DELIMITER $$
+CREATE TRIGGER xyz
+AFTER INSERT ON salse
+FOR EACH ROW
+
+BEGIN
+INSERT INTO message VALUES ("message receved");
+END $$
+DELIMITER ;
+
+if you can insert a any record so in the message table add in msg column any massage
+
+
+------------------------------------------------------------------------------------------------------
+CREATE DATABASE date_formate;
+
+CREATE TABLE test(
+	id int AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50),
+    visit_date date
+);
+
+INSERT INTO test(name,visit_date) VALUES ("xyz","2025-12-25");
+INSERT INTO test(name,visit_date) VALUES ("abc","2025-11-25");
+INSERT INTO test(name,visit_date) VALUES ("def","2025-10-25");
+INSERT INTO test(name,visit_date) VALUES ("ghi","2025-12-25");
+INSERT INTO test(name,visit_date) VALUES ("jkl","2025-9-22");
+
+
+SELECT name,year(visit_date) as yearonly , month(visit_date) as monthonly,day(visit_date) as dayonly FROM test;
+it will bi give new column to  day year and month 
+
+
+
+
+
